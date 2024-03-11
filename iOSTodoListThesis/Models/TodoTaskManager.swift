@@ -8,6 +8,12 @@
 import Foundation
 import SwiftData
 
+// Observable usually requires specifying if something should be executed on main thread
+// https://forums.swift.org/t/observable-macro-conflicting-with-mainactor/67309
+// But everything here seems to be executed on the main thread, maybe becuase SwiftData automatically do stuff on the main thread?
+// https://forums.developer.apple.com/forums/thread/736226
+// Anyways, I'm sharing this info becuase I am updating stuff in the view without specifying main thread
+
 @Observable
 final class TodoTaskManager {
     private var modelContext: ModelContext
@@ -52,6 +58,7 @@ final class TodoTaskManager {
     
     private func fetchTodoData() {
         do {
+            print(Thread.current)
             let descriptor = FetchDescriptor<TodoTask>(sortBy: [SortDescriptor(\.isCompleted, order: .forward), SortDescriptor(\.timestamp)])
             self.tasks = try modelContext.fetch(descriptor)
         } catch {
