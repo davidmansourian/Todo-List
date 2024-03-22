@@ -40,7 +40,7 @@ final class TodoTaskManager {
     public func toggleCompletion(_ todoTask: TodoTask) {
         todoTask.isCompleted.toggle()
         
-        setCompletion(todoTask)
+        todoTask.completedOn = (todoTask.isCompleted ? Date.now : nil)
         
         fetchTodoData()
     }
@@ -58,16 +58,11 @@ final class TodoTaskManager {
     
     private func fetchTodoData() {
         do {
-            print(Thread.current)
             let descriptor = FetchDescriptor<TodoTask>(sortBy: [SortDescriptor(\.isCompleted, order: .forward), SortDescriptor(\.timestamp)])
             self.tasks = try modelContext.fetch(descriptor)
         } catch {
             print("Fetching from modelContext failed")
         }
-    }
-    
-    private func setCompletion(_ todoTask: TodoTask) {
-        todoTask.completedOn = (todoTask.isCompleted ? Date.now : nil)
     }
 }
 
