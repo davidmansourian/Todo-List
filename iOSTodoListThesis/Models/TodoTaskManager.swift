@@ -26,28 +26,30 @@ final class TodoTaskManager {
         fetchTodoData()
     }
     
-    // MARK: Line-per-line description
-    /// - Initialize a task with name
-    /// - insert into modelContext (database)
-    /// - update class variable 'tasks' by calling fetchTodoData()
+    // MARK: Function description
+    /// This function creates a TodoTask-object based on the name entered in the view.
+    /// the task is then added into the modelContext (databse). The class function fetchTodoData()
+    /// is called to update the class variable 'tasks' which is the array used in the view to represent the TodoTasks
     public func addTodoTask(name: String) {
         let task = TodoTask(name: name, isCompleted: false, timestamp: Date.now)
         modelContext.insert(task)
         fetchTodoData()
     }
     
-    // MARK: Line-per-line description
-    /// - Delete TodoTask from modelContext
-    /// - update class variable 'tasks' by calling fetchTodoData()
+    // MARK: Function description
+    /// This function deletes the TodoTask inserted into the function from the modelContext (database)
+    /// the function then calls the class function fetchTodoData() to update the class variable 'tasks',
+    /// which is the array used in the view to represent the TodoTasks
     public func deleteTodoTask(_ todoTask: TodoTask) {
         modelContext.delete(todoTask)
         fetchTodoData()
     }
     
-    // MARK: Line-per-line description
-    /// - Toggle completion state for task
-    /// - Set the "completedOn" variable for the specific task if the task isCompleted
-    /// - update class variable 'tasks' by calling fetchTodoData()
+    // MARK: Function description
+    /// This function toggles the completion for the inserted TodoTask.
+    /// If isCompleted is now true, then a completedOn-date is set as the date right now,
+    /// otherwise the completedOn is set to nil. The class function fetchTodoData() is then called
+    /// to update the class variable 'tasks' which is the array used in the view to represent the TodoTasks
     public func toggleCompletion(_ todoTask: TodoTask) {
         todoTask.isCompleted.toggle()
         
@@ -56,7 +58,7 @@ final class TodoTaskManager {
         fetchTodoData()
     }
     
-    // MARK: Line-per-line description
+    // MARK: Function description
     /// - Loop through class variable 'tasks'
     /// - Check if completedOn exists
     /// - If completedOn exists, calculate day difference between "today" and completedOn
@@ -73,7 +75,7 @@ final class TodoTaskManager {
         fetchTodoData()
     }
     
-    // MARK: Line-per-line description
+    // MARK: Function description
     /// - Start do-catch block
     /// - Create a descriptor that fetched 'TodoTask' from the datbase with sorting criteria for completed and timestamp (creation date)
     /// - set class variable 'tasks' to the sorted fetched data from modelContext
